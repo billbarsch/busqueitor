@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*Route::get('/', function () {
+    return view('principal/painel');
+});
+*/
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/grupo');
 });
+
+Route::resource('grupo', 'GrupoController');
