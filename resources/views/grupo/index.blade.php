@@ -38,7 +38,7 @@
                 @foreach($grupos as $grupo)
                 <tr>
                     <td>{{$grupo->nome}}</td>
-                    <td>{{$grupo->link}}</td>
+                    <td><a target="_blank" href="{{$grupo->link}}">{{$grupo->link}}</a></td>
                     <td>{{$grupo->descricao}}</td>
                 </tr>
                 @endforeach
