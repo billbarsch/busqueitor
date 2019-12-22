@@ -12,9 +12,21 @@ class GrupoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $grupos = Grupo::all();
+        $query = Grupo::select('*');
+        if (!empty($request->search)) {
+            $searchFields = ['nome', 'descricao'];
+            $query->where(function ($query) use ($request, $searchFields) {
+                $searchWildcard = '%' . $request->search . '%';
+                foreach ($searchFields as $field) {
+                    $query->orWhere($field, 'LIKE', $searchWildcard);
+                }
+            });
+        }
+
+        //$grupos = Grupo::all();
+        $grupos = $query->get();
         return view('grupo.index', compact('grupos'));
     }
 

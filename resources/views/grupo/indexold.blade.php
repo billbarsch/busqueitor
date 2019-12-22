@@ -1,14 +1,14 @@
 @extends('base')
+
 @section('main')
 
-@if(session()->get('success'))
-<br>
 <div class="col-sm-12">
+    @if(session()->get('success'))
     <div class="alert alert-success">
         {{ session()->get('success') }}
     </div>
+    @endif
 </div>
-@endif
 
 <div class="row">
     <div class="col-sm-12">
@@ -16,22 +16,13 @@
         <div>
             <a style="margin: 19px;" href="{{ route('grupo.create')}}" class="btn btn-primary">Novo grupo</a>
         </div>
-
-        <form action="{{ route('grupo.index')}}" method="get">
-            <div class="input-group md-form form-sm form-2 pl-0">
-                <input autofocus class="form-control my-0 py-1 amber-border" type="text" name="search" placeholder="Buscar grupo..." aria-label="Search" value="{{ request('search')}}">
-                <div class="input-group-append">
-                    <button class="btn btn-success" type="submit"><i class="fa fa-search text-grey" aria-hidden="true"></i></button>
-                </div>
-            </div>
-        </form>
-
         <table class="table table-striped">
             <thead>
                 <tr>
                     <td>Nome</td>
                     <td>link</td>
                     <td>Descrição</td>
+                    <td colspan=2></td>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +31,16 @@
                     <td>{{$grupo->nome}}</td>
                     <td>{{$grupo->link}}</td>
                     <td>{{$grupo->descricao}}</td>
+                    <td>
+                        <a href="{{ route('grupo.edit',$grupo->id)}}" class="btn btn-primary">Alterar</a>
+                    </td>
+                    <td>
+                        <form action="{{ route('grupo.destroy', $grupo->id)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">Apagar</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
